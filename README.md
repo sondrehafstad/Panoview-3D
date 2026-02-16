@@ -26,6 +26,7 @@ The camera is placed at the center, allowing you to look around freely.
 ---
 
 ## 🚀 Live Demo
+[![Live Demo](https://img.shields.io/badge/Live-Demo-00d9ff?style=for-the-badge&logo=github)](https://sondrehafstad.github.io/Panoview-3D/)
 
 
 
