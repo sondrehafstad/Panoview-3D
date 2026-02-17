@@ -25,7 +25,10 @@ useEffect(() => {
   if (!container) return;
 
   // Create renderer
-  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  const renderer = new THREE.WebGLRenderer({ 
+  antialias: true,
+  preserveDrawingBuffer: true // REQUIRED for screenshots
+  });
   renderer.setPixelRatio(window.devicePixelRatio);
   container.appendChild(renderer.domElement);
 
@@ -221,6 +224,22 @@ useEffect(() => {
     setImages([]);
     setCurrentIndex(0);
   };
+
+  const takeScreenshot = () => {
+  if (!rendererRef.current || !sceneRef.current || !cameraRef.current) return;
+
+  const renderer = rendererRef.current;
+
+  // Render latest frame
+  renderer.render(sceneRef.current, cameraRef.current);
+
+  const dataURL = renderer.domElement.toDataURL("image/png");
+
+  const link = document.createElement("a");
+  link.href = dataURL;
+  link.download = `panorama-${Date.now()}.png`;
+  link.click();
+};
 
   return (
     <div className="app">
@@ -778,6 +797,9 @@ useEffect(() => {
           </label>
           {images.length > 0 && (
             <>
+              <button className="btn" onClick={takeScreenshot}>
+                📸 Capture
+              </button>
               <button className="btn" onClick={() => setShowGallery(!showGallery)}>
                 Gallery ({images.length})
               </button>
